@@ -1,0 +1,47 @@
+{
+    "$jason": {
+        "head": {
+            "title": "Recettes",
+            "templates": {
+                "body": {
+                    "header": {
+                        "title": "Mes recettes"
+                    },
+                    "footer": {
+                        "tabs": {
+                            "items": [{
+                                "text": "Planning",
+                                "url": "file://planning.json"
+                            }, {
+                                "text": "Recettes",
+                                "url": "file://receipe.json"
+                            }, {
+                                "text": "Mon compte",
+                                "url": "file://account.json"
+                            }]
+                        }
+                    },
+                    "sections": [{
+                        "items": {
+                            "{{#each $jason.results}}": {
+                                "type": "label",
+                                "text": "{{name}}"
+                            }
+                        }
+                    }]
+                }
+            },
+            "actions": {
+                "$load": {
+                    "type": "$network.request",
+                    "options": {
+                        "url": "https://abouletonfilm.fr/receipes/"
+                    },
+                    "success": {
+                        "type": "$render"
+                    }
+                }
+            }
+        }
+    }
+}

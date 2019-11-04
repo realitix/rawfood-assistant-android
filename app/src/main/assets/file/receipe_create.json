@@ -1,0 +1,156 @@
+{
+  "$jason": {
+    "head": {
+      "title": "login"
+    },
+    "body": {
+      "style": {
+        "border": "none",
+        "background": "#646464"
+      },
+      "header": {
+        "title": "Connexion",
+        "style": {
+          "background": "#646464",
+          "color": "#ffffff"
+        }
+      },
+      "sections": [{
+        "items": [{
+          "type": "space",
+          "height": "10"
+        }, {
+          "type": "textfield",
+          "name": "username",
+          "style": {
+            "size": "20",
+            "color": "#8bb92d",
+            "font": "HelveticaNeue-Bold",
+            "background": "#575757",
+            "padding": "20"
+          },
+          "placeholder": "Nom d'utilisateur"
+        }, {
+          "type": "space",
+          "height": "5"
+        }, {
+          "type": "textfield",
+          "name": "password",
+          "placeholder": "Mot de passe",
+          "style": {
+            "size": "20",
+            "color": "#8bb92d",
+            "font": "HelveticaNeue-Bold",
+            "background": "#575757",
+            "padding": "20",
+            "secure": "true"
+          }
+        }, {
+          "type": "space",
+          "height": "5"
+        }, {
+          "type": "label",
+          "style": {
+            "width": "100%",
+            "align": "right",
+            "font": "HelveticaNeue-Bold",
+            "size": "20",
+            "padding": "10",
+            "background": "#8bb92d",
+            "color": "#ffffff"
+          },
+          "text": "Connexion >",
+          "action": {
+            "type": "$network.request",
+            "options": {
+              "url": "https://abouletonfilm.fr/api-token-auth/",
+              "method": "post",
+              "content_type": "json",
+              "data": {
+                "username": "{{$get.username}}",
+                "password": "{{$get.password}}"
+              }
+            },
+            "success": {
+              "type": "$session.set",
+              "options": {
+                "domain": "https://abouletonfilm.fr",
+                "header": {
+                  "Authorization": "Token {{$jason.token}}"
+                }
+              },
+              "success": {
+                "type": "$href",
+                "options": {
+                  "url": "file://receipe.json",
+                  "transition": "replace"
+                }
+              }
+            },
+            "error": {
+              "type": "$util.banner",
+              "options": {
+                "title": "Erreur",
+                "description": "Identifiant ou mot de passe erroné"
+              }
+            }
+          }
+        }, {
+          "type": "label",
+          "style": {
+            "size": "16",
+            "font": "HelveticaNeue-Bold",
+            "text": "or",
+            "padding": "10",
+            "align": "center"
+          }
+        }, {
+          "type": "label",
+          "text": "Sign up >",
+          "style": {
+            "align": "right",
+            "size": "20",
+            "padding": "10",
+            "font": "HelveticaNeue-Bold",
+            "color": "#ffffff"
+          },
+          "action": {
+            "type": "$network.request",
+            "options": {
+              "url": "ROOT/users.json",
+              "method": "post",
+              "data": {
+                "user[email]": "{{$get.email}}",
+                "user[password]": "{{$get.password}}"
+              }
+            },
+            "success": {
+              "type": "$session.set",
+              "options": {
+                "domain": "ROOT",
+                "header": {
+                  "X-User-Email": "{{$jason.email}}",
+                  "X-User-Token": "{{$jason.authentication_token}}"
+                }
+              },
+              "success": {
+                "type": "$href",
+                "options": {
+                  "url": "ROOT/posts.json",
+                  "transition": "replace"
+                }
+              }
+            },
+            "error": {
+              "type": "$util.banner",
+              "options": {
+                "title": "Enter credentials",
+                "description": "Please enter both email and password"
+              }
+            }
+          }
+        }]
+      }]
+    }
+  }
+}
