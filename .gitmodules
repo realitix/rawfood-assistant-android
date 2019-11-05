@@ -1,0 +1,3 @@
+[submodule "app/src/main/assets/file"]
+	path = app/src/main/assets/file
+	url = https://github.com/realitix/rawfood-assistant-jasonette.git
