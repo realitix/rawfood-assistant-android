@@ -1,0 +1,19 @@
+$jason:
+    head:
+        title: Chargement
+        actions:
+            $load:
+                type: $network.request
+                options:
+                    url: https://abouletonfilm.fr/api-token-auth/
+                    method: post
+                    content_type: json
+                    data:
+                        username: "{{$global.auth_username}}"
+                        password: "{{$global.auth_password}}"
+                success:
+                    type: $session.set
+                    options:
+                        domain: https://abouletonfilm.fr
+                        header:
+                            Authorization: "Token {{$jason.token}}"
