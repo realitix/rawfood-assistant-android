@@ -1,0 +1,39 @@
+{
+    "$jason": {
+        "head": {
+            "title": "Déconnexion",
+            "actions": {
+                "$load": {
+                    "type": "$global.reset",
+                    "options": {
+                        "items": [
+                            "auth_username",
+                            "auth_password"
+                        ]
+                    },
+                    "success": {
+                        "type": "$session.reset",
+                        "options": {
+                            "domain": "https://abouletonfilm.fr"
+                        },
+                        "success": {
+                            "type": "$href",
+                            "options": {
+                                "url": "file://login.json"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "body": {
+            "header": {
+                "title": "Déconnexion",
+                "style": {
+                    "background": "#646464",
+                    "color": "#ffffff"
+                }
+            }
+        }
+    }
+}

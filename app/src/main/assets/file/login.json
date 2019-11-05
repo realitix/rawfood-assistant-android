@@ -73,12 +73,18 @@
             },
 
             "success": {
-                "type": "$session.set",
+              "type": "$session.set",
+              "options": {
+                "domain": "https://abouletonfilm.fr",
+                "header": {
+                  "Authorization": "Token {{$global.user_token}}"
+                }
+              },
+              "success": {
+                "type": "$global.set",
                 "options": {
-                  "domain": "https://abouletonfilm.fr",
-                  "header": {
-                    "Authorization": "Token {{$jason.token}}"
-                  }
+                  "auth_username": "{{$root.$get.username}}",
+                  "auth_password": "{{$root.$get.password}}"
                 },
                 "success": {
                   "type": "$href",
@@ -87,7 +93,7 @@
                     "transition": "replace"
                   }
                 }
-
+              }
             },
             "error": {
               "type": "$util.banner",

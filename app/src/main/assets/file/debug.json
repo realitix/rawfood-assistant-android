@@ -1,0 +1,25 @@
+{
+    "$jason": {
+        "head": {
+            "title": "Chargement",
+            "actions": {
+                "$load": {
+                    "type": "$util.alert",
+                    "options": {
+                        "title": "test",
+                        "description": "name: {{$global.auth_username}} pass: {{$global.auth_password}}"
+                    }
+                }
+            }
+        },
+        "body": {
+            "header": {
+                "title": "Chargement",
+                "style": {
+                    "background": "#646464",
+                    "color": "#ffffff"
+                }
+            }
+        }
+    }
+}

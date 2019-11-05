@@ -16,8 +16,8 @@
                                 "text": "Recettes",
                                 "url": "file://receipe.json"
                             }, {
-                                "text": "Mon compte",
-                                "url": "file://account.json"
+                                "text": "Déconnexion",
+                                "url": "file://disconnect.json"
                             }]
                         }
                     },
