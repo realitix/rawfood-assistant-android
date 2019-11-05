@@ -18,11 +18,32 @@
                         "type": "$session.set",
                         "options": {
                             "domain": "https://abouletonfilm.fr",
-                            "header\"": {
-                                "Authorization\"": "Token {{$jason.token}}"
+                            "header": {
+                                "Authorization": "Token {{$jason.token}}"
+                            }
+                        },
+                        "success": {
+                            "type": "$href",
+                            "options": {
+                                "url": "file://out/receipe.json"
                             }
                         }
+                    },
+                    "error": {
+                        "type": "$href",
+                        "options": {
+                            "url": "file://out/login.json"
+                        }
                     }
+                }
+            }
+        },
+        "body": {
+            "header": {
+                "title": "Chargement",
+                "style": {
+                    "background": null,
+                    "color": null
                 }
             }
         }
