@@ -32,8 +32,10 @@ import com.jasonette.seed.Helper.JasonHelper;
 import com.jasonette.seed.Helper.JasonImageHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -269,16 +271,42 @@ public class JasonUtilAction {
 
 
     public void datepicker(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
-        new SingleDateAndTimePickerDialog.Builder(context)
+        boolean onlyDate = false;
+        JSONObject options = new JSONObject();
+        if (action.has("options")) {
+            try {
+                options = action.getJSONObject("options");
+                if(options.getBoolean("only_date")) {
+                    onlyDate = true;
+                }
+            } catch (JSONException e) {
+
+            }
+        }
+
+        String tmpDateFormat;
+        try {
+            tmpDateFormat = action.getJSONObject("options").getString("date_format");
+        } catch (JSONException e) {
+            tmpDateFormat = "";
+        }
+        final String dateFormat = tmpDateFormat;
+
+        SingleDateAndTimePickerDialog.Builder dialog = new SingleDateAndTimePickerDialog.Builder(context)
                 .bottomSheet()
                 .curved()
-                //.minutesStep(15)
-                //.title("Simple")
                 .listener(new SingleDateAndTimePickerDialog.Listener() {
                     @Override
                     public void onDateSelected(Date date) {
                         try {
-                            String val = String.valueOf(date.getTime()/1000);
+                            String val;
+                            if(dateFormat.isEmpty()) {
+                                val = String.valueOf(date.getTime() / 1000);
+                            }
+                            else {
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+                                val = simpleDateFormat.format(date);
+                            }
                             JSONObject value = new JSONObject();
                             value.put("value", val);
                             JasonHelper.next("success", action, value, event, context);
@@ -287,8 +315,18 @@ public class JasonUtilAction {
                         }
 
                     }
-                }).display();
+                });
 
+        if(onlyDate) {
+            dialog.displayMinutes(false)
+                .displayHours(false)
+                .displayDays(false)
+                .displayMonth(true)
+                .displayYears(true)
+                .displayDaysOfMonth(true);
+        }
+
+        dialog.display();
     }
 
 

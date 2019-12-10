@@ -1478,6 +1478,10 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
                 if(action.getJSONObject("options").has("transition")){
                     transition = action.getJSONObject("options").getString("transition");
                 }
+                boolean clearTop = false;
+                if(action.getJSONObject("options").has("clear_top")){
+                    clearTop = action.getJSONObject("options").getBoolean("clear_top");
+                }
 
                 // "view": "web"
                 if (action.getJSONObject("options").has("view")) {
@@ -1486,6 +1490,9 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
                         try {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(url));
+                            if (clearTop) {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            }
                             startActivity(intent);
                         } catch (Exception e) {
                             Intent intent = new Intent(url);
@@ -1541,6 +1548,9 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
                     onRefresh();
                 } else {
                     Intent intent = new Intent(this, JasonViewActivity.class);
+                    if (clearTop) {
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    }
                     intent.putExtra("url", url);
                     if(params != null) {
                         intent.putExtra("params", params);
