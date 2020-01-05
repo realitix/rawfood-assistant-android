@@ -45,6 +45,17 @@ public class JasonUtilAction {
     private int counter; // general purpose counter;
     private Intent callback_intent;  // general purpose intent;
 
+    public void wait(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        try {
+            JSONObject options = action.getJSONObject("options");
+            int time = options.getInt("time");
+            Thread.sleep(time);
+            JasonHelper.next("success", action, new JSONObject(), event, context);
+        } catch (Exception e) {
+            Log.d("Warning", e.getStackTrace()[0].getMethodName() + " : " + e.toString());
+        }
+    }
+
     public void banner(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
