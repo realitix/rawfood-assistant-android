@@ -45,7 +45,7 @@ public class JasonUtilAction {
     private int counter; // general purpose counter;
     private Intent callback_intent;  // general purpose intent;
 
-    public void wait(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+    public void sleep(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
         try {
             JSONObject options = action.getJSONObject("options");
             int time = options.getInt("time");
