@@ -2627,7 +2627,12 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
                         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
                         // put the search icon on the right hand side of the toolbar
-                        searchView.setLayoutParams(new Toolbar.LayoutParams(Gravity.RIGHT));
+                        if (search.has("focus") && search.getBoolean("focus")) {
+                            searchView.setIconifiedByDefault(false);
+                        } else {
+                            searchView.setLayoutParams(new Toolbar.LayoutParams(Gravity.RIGHT));
+                        }
+
 
                         toolbar.addView(searchView);
                     } else {
@@ -2668,7 +2673,7 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
                         @Override
                         public boolean onQueryTextSubmit(String s) {
                             // name
-                            if(search.has("name")){
+                            if(search.has("name") && !search.has("live")){
                                 try {
                                     JSONObject kv = new JSONObject();
                                     kv.put(search.getString("name"), s);
@@ -2685,7 +2690,19 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
 
                         @Override
                         public boolean onQueryTextChange(String s) {
-                            if(search.has("action")){
+                            if(search.has("action") && search.has("live")){
+                                try {
+                                    JSONObject kv = new JSONObject();
+                                    kv.put(search.getString("name"), s);
+                                    model.var = JasonHelper.merge(model.var, kv);
+                                    if(search.has("action")){
+                                        call(search.getJSONObject("action").toString(), new JSONObject().toString(), "{}", JasonViewActivity.this);
+                                    }
+                                } catch (Exception e){
+                                    Log.d("Warning", e.getStackTrace()[0].getMethodName() + " : " + e.toString());
+                                }
+                                return true;
+                            } else if(search.has("action")){
                                 return false;
                             } else {
                                 if(listView != null){
