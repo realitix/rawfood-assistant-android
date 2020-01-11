@@ -22,7 +22,7 @@ public class JasonRawfoodAction {
         Request.Builder builder = new Request.Builder();
         Request request = builder.url(url).build();
         OkHttpClient client = ((Launcher)context.getApplicationContext()).getHttpClient(1);
-        final int max_retry = 20;
+        final int max_retry = 60;
         int i = 0;
         for(i = 0; i < max_retry; i++) {
             try {
