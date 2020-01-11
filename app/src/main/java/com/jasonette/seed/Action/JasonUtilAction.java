@@ -283,15 +283,19 @@ public class JasonUtilAction {
 
     public void datepicker(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
         boolean onlyDate = false;
+        boolean ampm = false;
         JSONObject options = new JSONObject();
         if (action.has("options")) {
             try {
                 options = action.getJSONObject("options");
-                if(options.getBoolean("only_date")) {
+                if(options.has("only_date") && options.getBoolean("only_date")) {
                     onlyDate = true;
                 }
+                if(!options.has("ampm") || options.getBoolean("ampm")) {
+                    ampm = true;
+                }
             } catch (JSONException e) {
-
+                Log.d("Warning", e.getStackTrace()[0].getMethodName() + " : " + e.toString());
             }
         }
 
@@ -306,6 +310,7 @@ public class JasonUtilAction {
         SingleDateAndTimePickerDialog.Builder dialog = new SingleDateAndTimePickerDialog.Builder(context)
                 .bottomSheet()
                 .curved()
+                .displayAmPm(ampm)
                 .listener(new SingleDateAndTimePickerDialog.Listener() {
                     @Override
                     public void onDateSelected(Date date) {
