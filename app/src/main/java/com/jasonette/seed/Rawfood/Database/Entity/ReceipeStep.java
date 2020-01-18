@@ -18,7 +18,7 @@ public class ReceipeStep {
     public String description;
     public int duration;
 
-    public ReceipeStep(int receipeId, int order, String description, int duration) {
+    public ReceipeStep(long receipeId, int order, String description, int duration) {
         this.receipeId = receipeId;
         this.order = order;
         this.description = description;

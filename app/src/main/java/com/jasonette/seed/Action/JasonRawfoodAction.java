@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonWriter;
 import com.jasonette.seed.Helper.JasonHelper;
 import com.jasonette.seed.Launcher.Launcher;
 import com.jasonette.seed.Rawfood.AlimentUpdater;
+import com.jasonette.seed.Rawfood.Database.Dao.ReceipeDao;
 import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.AlimentCategory;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,19 +32,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class JasonRawfoodAction {
+    class ReturnClass {
+        public long id;
+    }
+
     private String toJson(Object obj) {
         Gson gson = new Gson();
         return gson.toJson(obj);
     }
 
     private String toJsonId(long id) {
-        class ReturnClass {
-            public long id;
-            public ReturnClass(long id) {
-                this.id = id;
-            }
-        }
-        ReturnClass result = new ReturnClass(id);
+        ReturnClass result = new ReturnClass();
+        result.id = id;
         return toJson(result);
     }
 
@@ -116,7 +117,8 @@ public class JasonRawfoodAction {
                 }
 
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
-                Receipe receipe = db.receipeDao().get(receipe_id);
+                ReceipeDao.ReceipeWithSteps receipe = db.receipeDao().getWithSteps(receipe_id);
+                Log.e("test", toJson(receipe));
                 JasonHelper.next("success", action, toJson(receipe), event, context);
             }
         });
@@ -127,7 +129,7 @@ public class JasonRawfoodAction {
             @Override
             public void run() {
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
-                Receipe[] receipes = db.receipeDao().getList();
+                List<Receipe> receipes = db.receipeDao().getList();
                 JasonHelper.next("success", action, toJson(receipes), event, context);
             }
         });

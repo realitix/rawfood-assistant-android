@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface AlimentCategoryDao {
     @Query("SELECT * FROM AlimentCategory")
-    AlimentCategory[] getList();
+    List<AlimentCategory> getList();
 
     @Query("SELECT * FROM AlimentCategory WHERE name=:name")
     AlimentCategory getByName(String name);

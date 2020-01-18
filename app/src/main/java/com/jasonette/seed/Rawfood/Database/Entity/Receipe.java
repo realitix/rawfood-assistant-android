@@ -11,6 +11,8 @@ public class Receipe {
     public int nb_people;
     public int stars;
 
+    public Receipe() {}
+
     public Receipe(String name, int nb_people, int stars) {
         this.name = name;
         this.nb_people = nb_people;
