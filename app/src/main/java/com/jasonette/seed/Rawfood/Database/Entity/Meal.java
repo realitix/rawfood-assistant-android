@@ -3,7 +3,7 @@ package com.jasonette.seed.Rawfood.Database.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "meal")
+@Entity
 public class Meal {
     @PrimaryKey(autoGenerate = true)
     public long id;

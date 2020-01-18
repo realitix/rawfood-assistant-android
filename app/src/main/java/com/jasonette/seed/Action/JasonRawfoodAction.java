@@ -4,16 +4,24 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import com.jasonette.seed.Helper.JasonHelper;
 import com.jasonette.seed.Launcher.Launcher;
 import com.jasonette.seed.Rawfood.AlimentUpdater;
 import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.AlimentCategory;
+import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
 import com.jasonette.seed.Rawfood.Database.RawfoodDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,6 +30,22 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class JasonRawfoodAction {
+    private String toJson(Object obj) {
+        Gson gson = new Gson();
+        return gson.toJson(obj);
+    }
+
+    private String toJsonId(long id) {
+        class ReturnClass {
+            public long id;
+            public ReturnClass(long id) {
+                this.id = id;
+            }
+        }
+        ReturnClass result = new ReturnClass(id);
+        return toJson(result);
+    }
+
     public void ready(final JSONObject action, final JSONObject data, final JSONObject event, final Context context){
         String url = "http://127.0.0.1:18385";
         Request.Builder builder = new Request.Builder();
@@ -57,21 +81,55 @@ public class JasonRawfoodAction {
                 JasonHelper.next("success", action, empty, event, context);
             }
         });
-        /*AlimentUpdater au = new AlimentUpdater();
-        au.update(context);
-        JSONObject empty = new JSONObject();
-        JasonHelper.next("success", action, empty, event, context);*/
     }
 
-    public void insertAlimentCategory(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
-        /*RawfoodDatabase db = RawfoodDatabase.getInstance(context);
-        AlimentCategory ac = new AlimentCategory("test", true);
-        db.alimentCategoryDao().insert(ac);
+    public void createReceipe(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                String receipe_name = "";
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    receipe_name = options.getString("name");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        Aliment a = new Aliment("name", "name2", ac);
-        db.alimentDao().insert(a);
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                Receipe receipe = new Receipe(receipe_name, 1, 3);
+                long receipe_id = db.receipeDao().insert(receipe);
+                JasonHelper.next("success", action, toJsonId(receipe_id), event, context);
+            }
+        });
+    }
 
-        JSONObject empty = new JSONObject();
-        JasonHelper.next("success", action, empty, event, context);*/
+    public void viewReceipe(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                long receipe_id = 0;
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    receipe_id = options.getLong("id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                Receipe receipe = db.receipeDao().get(receipe_id);
+                JasonHelper.next("success", action, toJson(receipe), event, context);
+            }
+        });
+    }
+
+    public void listReceipes(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                Receipe[] receipes = db.receipeDao().getList();
+                JasonHelper.next("success", action, toJson(receipes), event, context);
+            }
+        });
     }
 }

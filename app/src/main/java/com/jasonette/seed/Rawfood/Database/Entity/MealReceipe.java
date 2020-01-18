@@ -4,9 +4,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(
-        tableName = "meal_receipe",
-        primaryKeys = {"receipeId", "mealId"},
+@Entity(primaryKeys = {"receipeId", "mealId"},
         foreignKeys = {
         @ForeignKey(
                 entity = Receipe.class,

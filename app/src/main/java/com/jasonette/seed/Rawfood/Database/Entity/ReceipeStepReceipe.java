@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "receipe_step_receipe", foreignKeys = {
+@Entity(foreignKeys = {
         @ForeignKey(
                 entity = Receipe.class,
                 parentColumns = "id",

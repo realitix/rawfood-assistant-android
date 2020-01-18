@@ -6,8 +6,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "aliment",
-        foreignKeys = @ForeignKey(
+@Entity(foreignKeys = @ForeignKey(
             entity = AlimentCategory.class,
             parentColumns = "id",
             childColumns = "categoryId",
@@ -24,7 +23,7 @@ public class Aliment {
     @Embedded
     public AlimentNutrition nutrition;
 
-    public Aliment(String name, String nameSearch, int categoryId, AlimentNutrition nutrition) {
+    public Aliment(String name, String nameSearch, long categoryId, AlimentNutrition nutrition) {
         this.name = name;
         this.nameSearch = nameSearch;
         this.categoryId = categoryId;

@@ -12,10 +12,10 @@ import java.util.List;
 
 @Dao
 public interface AlimentCategoryDao {
-    @Query("SELECT * FROM aliment_category")
+    @Query("SELECT * FROM AlimentCategory")
     AlimentCategory[] getList();
 
-    @Query("SELECT * FROM aliment_category WHERE name=:name")
+    @Query("SELECT * FROM AlimentCategory WHERE name=:name")
     AlimentCategory getByName(String name);
 
     @Insert

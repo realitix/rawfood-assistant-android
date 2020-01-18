@@ -13,13 +13,13 @@ import java.util.List;
 @Dao
 public interface AlimentDao {
     @Query("Select * from aliment")
-    List<Aliment> getList();
+    Aliment[] getList();
 
     @Query("SELECT * FROM aliment WHERE name=:name")
     Aliment getByName(String name);
 
     @Insert
-    void insert(Aliment aliment);
+    long insert(Aliment aliment);
 
     @Update
     void update(Aliment aliment);

@@ -69,6 +69,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services:11.6.2'
     implementation 'com.android.support:multidex:1.0.2'
     implementation 'com.czerwii:SlidingdrawerMenu:1.0.1'
+    //implementation 'de.pribluda.android:jsonmarshaller:0.6'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'androidx.room:room-runtime:2.2.3'
     annotationProcessor "androidx.room:room-compiler:2.2.3"
 }
