@@ -2,34 +2,25 @@ package com.jasonette.seed.Action;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
 import com.jasonette.seed.Helper.JasonHelper;
 import com.jasonette.seed.Launcher.Launcher;
 import com.jasonette.seed.Rawfood.AlimentUpdater;
 import com.jasonette.seed.Rawfood.Database.Dao.ReceipeDao;
-import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
-import com.jasonette.seed.Rawfood.Database.Entity.AlimentCategory;
+import com.jasonette.seed.Rawfood.Database.Dao.ReceipeStepDao;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
+import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStep;
 import com.jasonette.seed.Rawfood.Database.RawfoodDatabase;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class JasonRawfoodAction {
     class ReturnClass {
@@ -104,6 +95,28 @@ public class JasonRawfoodAction {
         });
     }
 
+    public void createReceipeStep(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                String description = "";
+                long receipe_id = 0;
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    description = options.getString("description");
+                    receipe_id = options.getLong("receipe_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                ReceipeStep step = new ReceipeStep(receipe_id, 0, description, 10);
+                long step_id = db.receipeStepDao().insert(step);
+                JasonHelper.next("success", action, toJsonId(step_id), event, context);
+            }
+        });
+    }
+
     public void viewReceipe(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -111,15 +124,33 @@ public class JasonRawfoodAction {
                 long receipe_id = 0;
                 try {
                     final JSONObject options = action.getJSONObject("options");
-                    receipe_id = options.getLong("id");
+                    receipe_id = options.getLong("receipe_id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
-                ReceipeDao.ReceipeWithSteps receipe = db.receipeDao().getWithSteps(receipe_id);
-                Log.e("test", toJson(receipe));
+                ReceipeDao.ReceipeFull receipe = db.receipeDao().getFull(receipe_id);
                 JasonHelper.next("success", action, toJson(receipe), event, context);
+            }
+        });
+    }
+
+    public void viewReceipeStep(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                long step_id = 0;
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    step_id = options.getLong("step_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                ReceipeStepDao.ReceipeStepFull step = db.receipeStepDao().getFull(step_id);
+                JasonHelper.next("success", action, toJson(step), event, context);
             }
         });
     }

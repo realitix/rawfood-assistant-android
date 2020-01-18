@@ -9,11 +9,26 @@ import androidx.room.Update;
 
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
 import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStep;
+import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStepAliment;
+import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStepReceipe;
 
 import java.util.List;
 
 @Dao
 public interface ReceipeStepDao {
+    class ReceipeStepFull extends ReceipeStep {
+        @Relation(parentColumn = "id", entityColumn = "stepId")
+        List<ReceipeStepAliment> aliments;
+        @Relation(parentColumn = "id", entityColumn = "stepId")
+        List<ReceipeStepReceipe> receipes;
+    }
+
+    @Query("SELECT * FROM ReceipeStep WHERE id=:id")
+    ReceipeStep get(long id);
+
+    @Query("SELECT * FROM ReceipeStep WHERE id=:id")
+    ReceipeStepFull getFull(long id);
+
     @Insert
     long insert(ReceipeStep receipeStep);
 }

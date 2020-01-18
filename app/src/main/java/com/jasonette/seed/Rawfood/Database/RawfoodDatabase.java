@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import com.jasonette.seed.Rawfood.Database.Dao.AlimentCategoryDao;
 import com.jasonette.seed.Rawfood.Database.Dao.AlimentDao;
 import com.jasonette.seed.Rawfood.Database.Dao.ReceipeDao;
+import com.jasonette.seed.Rawfood.Database.Dao.ReceipeStepDao;
 import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.AlimentCategory;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
@@ -36,4 +37,5 @@ public abstract class RawfoodDatabase extends RoomDatabase {
     public abstract AlimentCategoryDao alimentCategoryDao();
     public abstract AlimentDao alimentDao();
     public abstract ReceipeDao receipeDao();
+    public abstract ReceipeStepDao receipeStepDao();
 }
