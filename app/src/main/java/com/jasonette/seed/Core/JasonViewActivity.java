@@ -59,6 +59,7 @@ import com.jasonette.seed.Lib.JasonToolbar;
 import com.jasonette.seed.Lib.MaterialBadgeTextView;
 import com.jasonette.seed.R;
 import com.jasonette.seed.Section.ItemAdapter;
+import com.jasonette.seed.View.LeftSideMenu;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.json.JSONArray;
@@ -117,6 +118,7 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
     private JSONObject launch_action;
     private ArrayList<JSONObject> event_queue;
     ArrayList<View> layer_items;
+    private LeftSideMenu leftSideMenu;
 
     public View focusView = null;
 
@@ -237,6 +239,9 @@ public class JasonViewActivity extends AppCompatActivity implements ActivityComp
 
         // 6. set root layout as content
         setContentView(rootLayout);
+
+        // TEST left panel
+        //leftSideMenu = new LeftSideMenu(this, toolbar, savedInstanceState);
 
         firstResume = true;
 

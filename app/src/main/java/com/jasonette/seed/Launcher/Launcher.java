@@ -119,9 +119,9 @@ public class Launcher extends Application {
         super.onCreate();
 
         // Start the django service
-        Python.start(new AndroidPlatform(this));
-        Intent django_intent = new Intent(this, DjangoBackendService.class);
-        startService(django_intent);
+        //Python.start(new AndroidPlatform(this));
+        //Intent django_intent = new Intent(this, DjangoBackendService.class);
+        //startService(django_intent);
 
         ViewTarget.setTagId(R.id.glide_request);
 
