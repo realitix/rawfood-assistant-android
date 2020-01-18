@@ -12,18 +12,9 @@ import java.util.List;
 
 @Dao
 public interface AlimentCategoryDao {
-    @Query("SELECT * FROM AlimentCategory")
-    List<AlimentCategory> getList();
-
     @Query("SELECT * FROM AlimentCategory WHERE name=:name")
     AlimentCategory getByName(String name);
 
     @Insert
     long insert(AlimentCategory alimentCategory);
-
-    @Update
-    void update(AlimentCategory alimentCategory);
-
-    @Delete
-    void delete(AlimentCategory alimentCategory);
 }

@@ -31,10 +31,4 @@ public interface ReceipeDao {
 
     @Insert
     long insert(Receipe receipe);
-
-    @Update
-    void update(Receipe receipe);
-
-    @Delete
-    void delete(Receipe receipe);
 }

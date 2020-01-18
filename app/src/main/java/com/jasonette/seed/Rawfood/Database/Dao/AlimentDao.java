@@ -20,10 +20,4 @@ public interface AlimentDao {
 
     @Insert
     long insert(Aliment aliment);
-
-    @Update
-    void update(Aliment aliment);
-
-    @Delete
-    void delete(Aliment aliment);
 }
