@@ -14,12 +14,16 @@ import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.AlimentCategory;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
 import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStep;
+import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStepAliment;
+import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStepReceipe;
 
 @Database(entities = {
         Aliment.class,
         AlimentCategory.class,
         Receipe.class,
-        ReceipeStep.class
+        ReceipeStep.class,
+        ReceipeStepAliment.class,
+        ReceipeStepReceipe.class
 }, exportSchema = false, version = 1)
 public abstract class RawfoodDatabase extends RoomDatabase {
     private static final String DB_NAME = "rawfood_db";

@@ -2,6 +2,7 @@ package com.jasonette.seed.Action;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jasonette.seed.Helper.JasonHelper;
@@ -150,6 +151,7 @@ public class JasonRawfoodAction {
 
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
                 ReceipeStepDao.ReceipeStepFull step = db.receipeStepDao().getFull(step_id);
+                Log.e("test", toJson(step));
                 JasonHelper.next("success", action, toJson(step), event, context);
             }
         });

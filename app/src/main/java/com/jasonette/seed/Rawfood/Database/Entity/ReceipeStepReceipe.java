@@ -24,7 +24,7 @@ public class ReceipeStepReceipe {
     public long receipeId;
     public long stepId;
 
-    public ReceipeStepReceipe(int receipeId, int stepId) {
+    public ReceipeStepReceipe(long receipeId, long stepId) {
         this.receipeId = receipeId;
         this.stepId = stepId;
     }
