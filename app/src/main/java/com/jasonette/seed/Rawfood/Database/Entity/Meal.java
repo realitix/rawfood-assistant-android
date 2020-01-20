@@ -8,12 +8,12 @@ public class Meal {
     @PrimaryKey(autoGenerate = true)
     public long id;
     // Timestamp
-    public int datetime;
+    public long timestamp;
     public int nb_people;
     public String description;
 
-    public Meal(int datetime, int nb_people, String description) {
-        this.datetime = datetime;
+    public Meal(long timestamp, int nb_people, String description) {
+        this.timestamp = timestamp;
         this.nb_people = nb_people;
         this.description = description;
     }

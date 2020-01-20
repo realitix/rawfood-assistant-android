@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Relation;
 
+import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
 import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStep;
 
@@ -19,6 +20,9 @@ public interface ReceipeDao {
 
     @Query("SELECT * FROM Receipe")
     List<Receipe> getList();
+
+    @Query("SELECT * FROM Receipe WHERE name LIKE '%' ||  :search || '%'")
+    List<Receipe> search(String search);
 
     @Query("SELECT * FROM Receipe WHERE id=:id")
     Receipe get(long id);

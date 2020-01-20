@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,9 +75,11 @@ public class AlimentUpdater {
 
                 // Insert aliment
                 String n = JSONaliment.getString("name_fr");
+                String asciiName = Normalizer.normalize(n, Normalizer.Form.NFD)
+                        .replaceAll("[^\\p{ASCII}]", "");
                 Aliment a = db.alimentDao().getByName(n);
                 if (a == null) {
-                    Aliment a_insert = new Aliment(n, n, ac.id, nutrition);
+                    Aliment a_insert = new Aliment(n, asciiName, ac.id, nutrition);
                     db.alimentDao().insert(a_insert);
                     nb_aliments_updated++;
                 }

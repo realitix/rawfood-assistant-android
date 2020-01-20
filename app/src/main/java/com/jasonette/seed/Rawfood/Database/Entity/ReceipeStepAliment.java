@@ -1,8 +1,12 @@
 package com.jasonette.seed.Rawfood.Database.Entity;
 
+import androidx.room.DatabaseView;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 @Entity(foreignKeys = {
         @ForeignKey(
@@ -23,9 +27,13 @@ public class ReceipeStepAliment {
     public long id;
     public long alimentId;
     public long stepId;
+    public int quantity;
 
-    public ReceipeStepAliment(long alimentId, long stepId) {
+    public ReceipeStepAliment() {}
+
+    public ReceipeStepAliment(long alimentId, long stepId, int quantity) {
         this.alimentId = alimentId;
         this.stepId = stepId;
+        this.quantity = quantity;
     }
 }

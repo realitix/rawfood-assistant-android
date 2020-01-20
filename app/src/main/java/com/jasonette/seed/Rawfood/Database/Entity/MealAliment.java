@@ -24,6 +24,8 @@ public class MealAliment {
     public long mealId;
     public int quantity;
 
+    public MealAliment() {}
+
     public MealAliment(long alimentId, long mealId, int quantity) {
         this.alimentId = alimentId;
         this.mealId = mealId;

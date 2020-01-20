@@ -23,6 +23,8 @@ public class MealReceipe {
     public long receipeId;
     public long mealId;
 
+    public MealReceipe() {}
+
     public MealReceipe(long receipeId, long mealId) {
         this.receipeId = receipeId;
         this.mealId = mealId;

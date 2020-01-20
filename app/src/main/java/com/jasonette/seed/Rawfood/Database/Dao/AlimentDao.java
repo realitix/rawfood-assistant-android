@@ -12,10 +12,13 @@ import java.util.List;
 
 @Dao
 public interface AlimentDao {
-    @Query("Select * from aliment")
+    @Query("SELECT * FROM Aliment")
     List<Aliment> getList();
 
-    @Query("SELECT * FROM aliment WHERE name=:name")
+    @Query("SELECT * FROM Aliment WHERE nameSearch LIKE '%' ||  :search || '%'")
+    List<Aliment> search(String search);
+
+    @Query("SELECT * FROM Aliment WHERE name LIKE :name")
     Aliment getByName(String name);
 
     @Insert

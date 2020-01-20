@@ -17,10 +17,10 @@ import java.util.List;
 @Dao
 public interface ReceipeStepDao {
     class ReceipeStepFull extends ReceipeStep {
-        @Relation(parentColumn = "id", entityColumn = "stepId")
-        List<ReceipeStepAliment> aliments;
-        @Relation(parentColumn = "id", entityColumn = "stepId")
-        List<ReceipeStepReceipe> receipes;
+        @Relation(parentColumn = "id", entityColumn = "stepId", entity = ReceipeStepAliment.class)
+        List<ReceipeStepAlimentDao.ReceipeStepAlimentFull> aliments;
+        @Relation(parentColumn = "id", entityColumn = "stepId", entity = ReceipeStepReceipe.class)
+        List<ReceipeStepReceipeDao.ReceipeStepReceipeFull> receipes;
     }
 
     @Query("SELECT * FROM ReceipeStep WHERE id=:id")

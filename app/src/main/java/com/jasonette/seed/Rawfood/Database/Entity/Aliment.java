@@ -3,6 +3,7 @@ package com.jasonette.seed.Rawfood.Database.Entity;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Fts4;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
