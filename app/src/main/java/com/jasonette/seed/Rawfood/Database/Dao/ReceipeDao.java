@@ -14,8 +14,8 @@ import java.util.List;
 @Dao
 public interface ReceipeDao {
     class ReceipeFull extends Receipe {
-        @Relation(parentColumn = "id", entityColumn = "receipeId")
-        List<ReceipeStep> steps;
+        @Relation(parentColumn = "id", entityColumn = "receipeId", entity = ReceipeStep.class)
+        List<ReceipeStepDao.ReceipeStepFull> steps;
     }
 
     @Query("SELECT * FROM Receipe")

@@ -14,6 +14,7 @@ public interface MealAlimentDao {
         @Relation(parentColumn = "alimentId", entityColumn = "id")
         Aliment alimentDetail;
     }
+
     @Insert
     long insert(MealAliment mealAliment);
 }

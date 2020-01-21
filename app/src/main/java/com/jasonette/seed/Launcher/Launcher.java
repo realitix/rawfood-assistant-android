@@ -11,8 +11,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.bumptech.glide.request.target.ViewTarget;
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
 import com.jasonette.seed.Core.JasonModel;
 import com.jasonette.seed.Core.JasonViewActivity;
 import com.jasonette.seed.Helper.JasonHelper;
@@ -32,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import com.jasonette.seed.BuildConfig;
-import com.jasonette.seed.Rawfood.DjangoBackendService;
 import com.jasonette.seed.Service.agent.JasonAgentService;
 import com.jasonette.seed.Service.websocket.JasonWebsocketService;
 
@@ -117,12 +114,6 @@ public class Launcher extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        // Start the django service
-        //Python.start(new AndroidPlatform(this));
-        //Intent django_intent = new Intent(this, DjangoBackendService.class);
-        //startService(django_intent);
-
         ViewTarget.setTagId(R.id.glide_request);
 
         // Look for all extensions and initialize them if they have initialize class methods

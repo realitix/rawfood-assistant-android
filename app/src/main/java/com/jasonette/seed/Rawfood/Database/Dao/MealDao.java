@@ -16,9 +16,9 @@ import java.util.List;
 public interface MealDao {
     class MealFull extends Meal {
         @Relation(parentColumn = "id", entityColumn = "mealId", entity = MealAliment.class)
-        List<ReceipeStepAlimentDao.ReceipeStepAlimentFull> aliments;
-        @Relation(parentColumn = "id", entityColumn = "stepId", entity = MealReceipe.class)
-        List<ReceipeStepReceipeDao.ReceipeStepReceipeFull> receipes;
+        List<MealAlimentDao.MealAlimentFull> aliments;
+        @Relation(parentColumn = "id", entityColumn = "mealId", entity = MealReceipe.class)
+        List<MealReceipeDao.MealReceipeFull> receipes;
     }
 
     @Query("SELECT * FROM Meal WHERE timestamp BETWEEN :begin AND :end")
@@ -29,4 +29,7 @@ public interface MealDao {
 
     @Query("SELECT * FROM Meal WHERE id=:id")
     Meal get(long id);
+
+    @Query("SELECT * FROM Meal WHERE id=:id")
+    MealFull getFull(long id);
 }

@@ -12,6 +12,8 @@ public class Meal {
     public int nb_people;
     public String description;
 
+    public Meal() {}
+
     public Meal(long timestamp, int nb_people, String description) {
         this.timestamp = timestamp;
         this.nb_people = nb_people;

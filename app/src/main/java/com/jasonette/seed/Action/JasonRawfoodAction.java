@@ -12,6 +12,8 @@ import com.jasonette.seed.Rawfood.Database.Dao.ReceipeDao;
 import com.jasonette.seed.Rawfood.Database.Dao.ReceipeStepDao;
 import com.jasonette.seed.Rawfood.Database.Entity.Aliment;
 import com.jasonette.seed.Rawfood.Database.Entity.Meal;
+import com.jasonette.seed.Rawfood.Database.Entity.MealAliment;
+import com.jasonette.seed.Rawfood.Database.Entity.MealReceipe;
 import com.jasonette.seed.Rawfood.Database.Entity.Receipe;
 import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStep;
 import com.jasonette.seed.Rawfood.Database.Entity.ReceipeStepAliment;
@@ -44,31 +46,6 @@ public class JasonRawfoodAction {
         return toJson(result);
     }
 
-    public void ready(final JSONObject action, final JSONObject data, final JSONObject event, final Context context){
-        String url = "http://127.0.0.1:18385";
-        Request.Builder builder = new Request.Builder();
-        Request request = builder.url(url).build();
-        OkHttpClient client = ((Launcher)context.getApplicationContext()).getHttpClient(1);
-        final int max_retry = 60;
-        int i = 0;
-        for(i = 0; i < max_retry; i++) {
-            try {
-                client.newCall(request).execute();
-                break;
-            } catch (IOException e) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-
-        String next = i < max_retry ? "success" : "error";
-        JSONObject empty = new JSONObject();
-        JasonHelper.next(next, action, empty, event, context);
-    }
-
     public void updateAliments(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -96,6 +73,52 @@ public class JasonRawfoodAction {
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
                 Meal meal = new Meal(timestamp, 2, "");
                 long meal_id = db.mealDao().insert(meal);
+                JasonHelper.next("success", action, toJsonId(meal_id), event, context);
+            }
+        });
+    }
+
+    public void createMealAliment(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                long alimentId = 0;
+                long mealId = 0;
+                int quantity = 0;
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    alimentId = options.getLong("aliment_id");
+                    mealId = options.getLong("meal_id");
+                    quantity = options.getInt("quantity");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                MealAliment mealAliment = new MealAliment(alimentId, mealId, quantity);
+                long meal_id = db.mealAlimentDao().insert(mealAliment);
+                JasonHelper.next("success", action, toJsonId(meal_id), event, context);
+            }
+        });
+    }
+
+    public void createMealReceipe(final JSONObject action, final JSONObject data, final JSONObject event, final Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                long receipeId = 0;
+                long mealId = 0;
+                try {
+                    final JSONObject options = action.getJSONObject("options");
+                    receipeId = options.getLong("receipe_id");
+                    mealId = options.getLong("meal_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RawfoodDatabase db = RawfoodDatabase.getInstance(context);
+                MealReceipe mealReceipe = new MealReceipe(receipeId, mealId);
+                long meal_id = db.mealReceipeDao().insert(mealReceipe);
                 JasonHelper.next("success", action, toJsonId(meal_id), event, context);
             }
         });
@@ -202,7 +225,7 @@ public class JasonRawfoodAction {
                 }
 
                 RawfoodDatabase db = RawfoodDatabase.getInstance(context);
-                Meal meal = db.mealDao().get(mealId);
+                Meal meal = db.mealDao().getFull(mealId);
                 JasonHelper.next("success", action, toJson(meal), event, context);
             }
         });
