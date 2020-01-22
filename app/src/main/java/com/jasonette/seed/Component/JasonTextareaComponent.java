@@ -3,7 +3,6 @@ package com.jasonette.seed.Component;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,6 +15,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.jasonette.seed.Helper.JasonHelper;
 import com.jasonette.seed.Core.JasonViewActivity;
 import org.json.JSONObject;

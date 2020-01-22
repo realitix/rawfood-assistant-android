@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.mobeedev.library.SlidingMenuBuilder;
 import com.mobeedev.library.SlidingNavigation;
